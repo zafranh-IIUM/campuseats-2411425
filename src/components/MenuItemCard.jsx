@@ -1,26 +1,21 @@
-export default function MenuItemCard() {
-  const item = {
-    name: 'Nasi Lemak Ayam',
-    description: 'Coconut rice, fried chicken, sambal, egg and peanuts',
-    price: 7.5,
-    available: true
-  };
+export default function MenuItemCard({ item, onAdd }) {
+  if (!item) return null;
 
   return (
     <div className="card food-card">
       <div className="avatar-box food-avatar">{item.name[0]}</div>
+      <span className="category-tag">{item.category}</span>
       <h3 className="food-name">{item.name}</h3>
       <p className="food-desc">{item.description}</p>
-      {/* Price formatted to 2 decimals */}
       <p className="food-price">RM {item.price.toFixed(2)}</p>
-      
-      {/* Dynamic Button */}
-      <button 
-        className="btn-add" 
+
+      <button
+        type="button"
+        className="btn-add"
         disabled={!item.available}
-        style={{ backgroundColor: item.available ? '' : '#9ca3af' }}
+        onClick={() => onAdd(item)}
       >
-        {item.available ? "Add to cart" : "Sold out"}
+        {item.available ? 'Add to cart' : 'Sold out'}
       </button>
     </div>
   );
