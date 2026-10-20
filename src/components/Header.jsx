@@ -1,14 +1,13 @@
-export default function Header({ cartCount = 0 }) {
+export default function Header({ cartCount, onShowMenu, onShowCart }) {
   return (
-    <header className="navbar">
+    <header className="header">
       <div className="navbar-container">
-        <h1 className="brand-logo">CampusEats</h1>
-        <nav className="nav-links">
-          <a href="#vendors">Vendors</a>
-          <a href="#orders">My Orders</a>
-          <a href="#cart">
-            Cart <span className="cart-badge">{cartCount}</span>
-          </a>
+        <h1 className="logo">CampusEats</h1>
+        <nav className="nav">
+          <button type="button" className="link" onClick={onShowMenu}>Vendors</button>
+          <button type="button" className="link cart" onClick={onShowCart}>
+            Cart <span className="badge">{cartCount}</span>
+          </button>
         </nav>
       </div>
     </header>

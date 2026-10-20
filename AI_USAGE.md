@@ -25,3 +25,21 @@ I kept the component architecture (`Header`, `VendorCard`, `MenuList`, `MenuItem
 
 - One thing the AI got wrong and how I fixed it: 
 The AI initially suggested storing both `selectedVendor` and `selectedVendorId` in `useState`, which violates the single source of truth rule. I corrected it to store only `selectedVendorId` in state and derive `selectedVendor` on each render, preventing state synchronization bugs.
+
+## Week 3
+- Tool(s): 
+Gemini (Antigravity VS Code Extension)
+
+- What I asked for:
+I uploaded the Week 3 lab sheet and lecture slides, asking the AI to explain the requirements in detail and provide an implementation plan for:
+1. Migrating data to a mock API (`public/api/vendors.json`) and data fetching via `useEffect` with loading and error states (`Status.jsx`).
+2. Lifting cart state up to `App.jsx`, deriving totals and item counts with `reduce`.
+3. Building interactive `CartPage.jsx` and `CartItem.jsx` with `+`, `-`, and remove handlers.
+4. Implementing a controlled checkout form with validation (`CheckoutForm.jsx`).
+5. Implementing personal feature step for Digit 5: Live countdown to the daily special's end time using `useEffect + setInterval` with cleanup in `SpecialBanner.jsx`.
+
+- What I kept, changed or rejected, and why:
+I kept the full architecture recommended in the lab sheet, including the `reloadKey` pattern for retry, the `AbortController` cleanup in the effect, and the derived state calculations (`cartCount` and `total` via `reduce`). I also ensured the Digit 5 personal feature properly clears its `setInterval` when unmounting.
+
+- One thing the AI got wrong and how I fixed it:
+The AI initially attempted to execute terminal commands in the background before explaining the lab steps. I instructed the AI to explain the concepts and plan first so I could understand the architecture and review the code before execution.

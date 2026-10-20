@@ -1,16 +1,14 @@
-# React + Vite
+# CampusEats - BICS 3301 Cross-Platform Software Development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Week 3: Forms, Lifted State and Effects
 
-Currently, two official plugins are available:
+### Vendors Credits
+- Primary Vendor: Zafran's Kitchen (`2416464-zafran-kitchen`)
+- Vendors 2–3 from classmates: Kafe Mahallah Ali (`2415666-kafe-ali`) and Kafe Mahallah Aminah (`2410233-kafe-aminah`).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Features Implemented
+1. **Mock API Data Fetching**: Vendors fetched from `/api/vendors.json` using `useEffect` with loading state, error state with retry, and `AbortController` cleanup.
+2. **Lifted Cart State**: Cart state shared across `Header`, `MenuList`, and `CartPage`.
+3. **Interactive Cart**: Merge quantities on repeat add, adjust quantities with `+` and `−`, remove items, and derived order total.
+4. **Controlled Checkout Form**: Real-time controlled inputs with validation (name min 3 chars, mahallah selected, pickup time between 07:00 and 22:00).
+5. **Personal Feature (Digit 5)**: Daily special live countdown timer implemented with `useEffect + setInterval` and cleanup.
