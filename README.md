@@ -1,7 +1,7 @@
 # CampusEats - BICS 3301 Cross-Platform Software Development
 
 ## Vendors Credits
-- **Primary Shop (My Shop):** Zafran's Kitchen (`2416464-zafran-kitchen`) — 8 menu items across 4 categories (`Rice`, `Noodles`, `Drinks`, `Snacks`).
+- **Primary Shop (My Shop):** Zafran's Kitchen (`2411425-zafran-kitchen`) — 8 menu items across 4 categories (`Rice`, `Noodles`, `Drinks`, `Snacks`).
 - **Vendors 2–3 from classmates:** Kafe Mahallah Ali (`2415666-kafe-ali` from `2415666`) and Kafe Mahallah Aminah (`2410233-kafe-aminah` from `2410233`).
 
 ## Features Implemented (Weeks 1–4)

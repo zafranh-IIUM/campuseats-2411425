@@ -1,13 +1,13 @@
 const vendors = [
   {
-    id: 'zafran-kitchen',
+    id: '2411425-zafran-kitchen',
     name: "Zafran's Kitchen",
     location: 'Mahallah Ali, Central Food Court',
     openHours: '8:00 am - 10:00 pm',
     isOpen: true,
     menu: [
       {
-        id: 'zk-1',
+        id: '2411425-zk-1',
         name: 'Nasi Ayam Penyet Berempah',
         description: 'Crispy spiced fried chicken served with fragrant rice, signature sambal terasi, tempeh and tofu',
         price: 9.50,
@@ -16,7 +16,7 @@ const vendors = [
         special: true
       },
       {
-        id: 'zk-2',
+        id: '2411425-zk-2',
         name: 'Nasi Kukus Ayam Dara',
         description: 'Steamed white rice paired with crispy fried chicken, rich herb curry gravy and sambal belacan',
         price: 9.00,
@@ -25,7 +25,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-3',
+        id: '2411425-zk-3',
         name: 'Nasi Lemak Sambal Sotong',
         description: 'Coconut fragrant rice with spicy chili squid, boiled egg, roasted peanuts and crispy anchovies',
         price: 8.50,
@@ -34,7 +34,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-4',
+        id: '2411425-zk-4',
         name: 'Mee Goreng Mamak Special',
         description: 'Wok-tossed yellow noodles with shredded chicken, bean sprouts, tofu cubes and calamansi lime',
         price: 7.00,
@@ -43,7 +43,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-5',
+        id: '2411425-zk-5',
         name: 'Kuey Teow Ladna Seafood',
         description: 'Flat rice noodles smothered in silky egg gravy with prawns, fish cakes and bok choy',
         price: 8.50,
@@ -52,7 +52,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-6',
+        id: '2411425-zk-6',
         name: 'Teh Tarik Madu Ais',
         description: 'Rich frothy pulled milk tea infused with raw wild honey and ice',
         price: 3.50,
@@ -61,7 +61,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-7',
+        id: '2411425-zk-7',
         name: 'Air Bandung Cincau',
         description: 'Refreshing rose syrup beverage with evaporated milk and grass jelly strips',
         price: 3.00,
@@ -70,7 +70,7 @@ const vendors = [
         special: false
       },
       {
-        id: 'zk-8',
+        id: '2411425-zk-8',
         name: 'Pisang Goreng Cheese Crispy',
         description: 'Golden batter-fried banana fritters topped with generous grated cheddar cheese and condensed milk',
         price: 5.00,
