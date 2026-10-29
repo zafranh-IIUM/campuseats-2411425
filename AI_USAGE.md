@@ -43,3 +43,16 @@ I kept the full architecture recommended in the lab sheet, including the `reload
 
 - One thing the AI got wrong and how I fixed it:
 The AI initially attempted to execute terminal commands in the background before explaining the lab steps. I instructed the AI to explain the concepts and plan first so I could understand the architecture and review the code before execution.
+
+## Week 4
+- Tool(s):
+Gemini (Antigravity VS Code Extension)
+
+- What I asked for:
+I provided the Week 4 lab sheet and reference materials (Custom Hooks, Context API, React Router 8, and the CampusEats DOM), asking the AI to first explain the concepts and build order in detail, create a checklist.
+
+- What I kept, changed or rejected, and why:
+I kept the modular separation into `src/hooks/`, `src/context/`, `src/pages/`, and `src/components/`, the `try/catch` blocks inside `useLocalStorage`, the 8-item value shared by `CartProvider` (with `count` and `total` derived using `.reduce()`), and the React Router 8 setup (`BrowserRouter`, `Layout` with `<Outlet />`, `NavLink` with `end` on `"/"`, `useParams()`, and `useNavigate()`). I rejected the AI's attempt to run `git add` and `git commit` directly so I could run the git commands and separate my feature commit myself.
+
+- One thing the AI got wrong and how I fixed it:
+In the initial version of `useVendors.js` (and `SpecialBanner.jsx`), calling `setLoading(true)` or `setTimeLeft(calculateRemaining())` synchronously at the top of `useEffect` triggered ESLint's `react-hooks/set-state-in-effect` error. We fixed this by moving `setLoading(true)` and `setError(null)` into the `reload()` function in `useVendors.js` and using lazy initial state `useState(() => calculateRemaining())` for the countdown timer so `npm run lint` and `npm run build` pass with zero errors.
