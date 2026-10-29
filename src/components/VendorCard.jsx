@@ -1,12 +1,10 @@
-export default function VendorCard({ vendor, isSelected, onSelect }) {
+import { Link } from 'react-router';
+
+export default function VendorCard({ vendor }) {
   if (!vendor) return null;
 
   return (
-    <button
-      type="button"
-      className={`card vendor-card ${isSelected ? 'selected' : ''}`}
-      onClick={() => onSelect(vendor.id)}
-    >
+    <Link to={`/vendor/${vendor.id}`} className="card vendor-card">
       <div className="avatar-box">{vendor.name[0]}</div>
       <div className="vendor-info">
         <h2 className="vendor-name">{vendor.name}</h2>
@@ -16,12 +14,12 @@ export default function VendorCard({ vendor, isSelected, onSelect }) {
           className="status-badge"
           style={{
             backgroundColor: vendor.isOpen ? '#e6f9ed' : '#fee2e2',
-            color: vendor.isOpen ? '#16a34a' : '#dc2626'
+            color: vendor.isOpen ? '#16a34a' : '#dc2626',
           }}
         >
           {vendor.isOpen ? 'Open now' : 'Closed'}
         </span>
       </div>
-    </button>
+    </Link>
   );
 }
