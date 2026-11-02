@@ -8,7 +8,7 @@ export default function VendorCard({ vendor }) {
       <div className="avatar-box">{vendor.name[0]}</div>
       <div className="vendor-info">
         <h2 className="vendor-name">{vendor.name}</h2>
-        <p className="vendor-meta">{vendor.location}</p>
+        <p className="vendor-meta">{vendor.location || vendor.Location}</p>
         <p className="vendor-meta">Open: {vendor.openHours}</p>
         <span
           className="status-badge"

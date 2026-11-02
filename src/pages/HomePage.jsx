@@ -40,7 +40,7 @@ export default function HomePage() {
 
   const todaysSpecials = vendors
     .map((vendor) => {
-      const specialItem = vendor.menu?.find((item) => item.special);
+      const specialItem = vendor.menu?.find((item) => item.special ?? item.popular);
       return specialItem ? { vendor, specialItem } : null;
     })
     .filter(Boolean);

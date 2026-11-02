@@ -29,7 +29,7 @@ export default function VendorPage() {
     );
   }
 
-  const specialItem = vendor.menu?.find((item) => item.special);
+  const specialItem = vendor.menu?.find((item) => item.special ?? item.popular);
 
   return (
     <section className="section-block">
@@ -40,7 +40,7 @@ export default function VendorPage() {
       </p>
       <h2 className="section-title">{vendor.name}</h2>
       <p className="muted" style={{ marginBottom: '1.25rem' }}>
-        {vendor.location} · Open: {vendor.openHours}
+        {vendor.location || vendor.Location} · Open: {vendor.openHours}
       </p>
 
       <SpecialBanner specialItem={specialItem} onAdd={addToCart} />

@@ -81,81 +81,269 @@ const vendors = [
     ]
   },
   {
-    id: 'kafe-ali',
-    name: 'Kafe Mahallah Ali',
-    location: 'Mahallah Ali, Block C Ground Floor',
-    openHours: '7:00 am - 10:00 pm',
+    id: '2419609-Romantika Pizza',
+    name: 'Romantika Pizza',
+    location: 'Mahallah Zubair, Centre Facilities',
+    openHours: '10:00 AM - 10:00 PM',
     isOpen: true,
     menu: [
       {
-        id: 'ali-1',
-        name: 'Nasi Kandar Ayam Bawang',
-        description: 'Steamed rice flooded with mixed gravies and caramelized onion fried chicken',
-        price: 8.50,
-        category: 'Rice',
+        id: '2419609-m1',
+        name: 'Margerita Pizza',
+        description: 'Classic pizza with tomato sauce, mozzarella cheese, and fresh basil.',
+        price: 15.0,
+        category: 'Pizza',
+        popular: true,
         available: true,
         special: true
       },
       {
-        id: 'ali-2',
-        name: 'Maggi Goreng Double',
-        description: 'Fried instant noodles seasoned with spices, veggies, and topped with sunny-side up egg',
-        price: 6.50,
-        category: 'Noodles',
+        id: '2419609-m2',
+        name: 'Pepperoni Pizza',
+        description: 'Delicious pizza topped with pepperoni slices and mozzarella cheese.',
+        price: 15.0,
+        category: 'Pizza',
+        popular: true,
         available: true,
         special: false
       },
       {
-        id: 'ali-3',
-        name: 'Roti Canai Telur Goyang',
-        description: 'Crispy flaky flatbread served with two soft poached eggs, dhal and sambal',
-        price: 4.50,
-        category: 'Roti',
+        id: '2419609-m3',
+        name: 'Veggie Pizza',
+        description: 'A healthy option with a variety of fresh vegetables and mozzarella cheese.',
+        price: 15.5,
+        category: 'Pizza',
+        popular: false,
         available: true,
         special: false
       },
       {
-        id: 'ali-4',
-        name: 'Milo Ais Dinosaur',
-        description: 'Chilled chocolate malt drink crowned with extra heaped spoonfuls of undissolved Milo powder',
-        price: 3.80,
-        category: 'Drinks',
+        id: '2419609-m4',
+        name: 'BBQ Chicken Pizza',
+        description: 'Pizza topped with BBQ sauce, grilled chicken, red onions, and mozzarella cheese.',
+        price: 15.0,
+        category: 'Pizza',
+        popular: true,
+        available: true,
+        special: false
+      },
+      {
+        id: '2416464-m5',
+        name: 'Garlic Bread',
+        description: 'Toasted bread with garlic butter',
+        price: 4.5,
+        category: 'Sides',
+        popular: false,
+        available: true,
+        special: false
+      },
+      {
+        id: '2416464-m6',
+        name: 'French Fries',
+        description: 'Golden crispy fries served with ketchup',
+        price: 3.5,
+        category: 'Sides',
+        popular: false,
+        available: true,
+        special: false
+      },
+      {
+        id: '2416464-m7',
+        name: 'Chicken Nuggets',
+        description: 'Crispy chicken pieces served with dipping sauce',
+        price: 6.0,
+        category: 'Sides',
+        popular: false,
+        available: true,
+        special: false
+      },
+      {
+        id: '2416464-m8',
+        name: 'Coca-Cola',
+        description: 'Refreshing soft drink',
+        price: 2.0,
+        category: 'Beverages',
+        popular: false,
+        available: true,
+        special: false
+      },
+      {
+        id: '2416464-m9',
+        name: 'Orange Juice',
+        description: 'Freshly squeezed orange juice',
+        price: 3.0,
+        category: 'Beverages',
+        popular: false,
         available: true,
         special: false
       }
     ]
   },
   {
-    id: 'kafe-aminah',
-    name: 'Kafe Mahallah Aminah',
-    location: 'Mahallah Aminah, Block D Cafeteria',
-    openHours: '8:00 am - 9:00 pm',
-    isOpen: false,
+    id: '2411925-furtive-katfe',
+    name: 'Furtive Katfe',
+    location: 'Mahallah Uthman, Block E',
+    openHours: '10:00 am - 10pm',
+    isOpen: true,
     menu: [
       {
-        id: 'ami-1',
-        name: 'Laksa Johor Tradisi',
-        description: 'Spaghetti noodles in aromatic spiced fish gravy garnished with fresh herbs and calamansi',
-        price: 8.00,
-        category: 'Noodles',
+        id: '2411925-f1',
+        name: 'Meow Cupcake',
+        description: 'Cupcake shaped like a kitty cat',
+        price: 4.5,
+        category: 'Dessert',
+        popular: true,
         available: true,
         special: true
       },
       {
-        id: 'ami-2',
-        name: 'Nasi Kerabu Ayam Percik',
-        description: 'Blue pea flower rice with grilled chicken in rich coconut percik glaze, budu and ulam-ulaman',
-        price: 10.00,
-        category: 'Rice',
+        id: '2411925-f2',
+        name: 'Carrot Cake',
+        description: 'Yummy carrot cake, big enuf for a family',
+        price: 16.0,
+        category: 'Dessert',
+        popular: true,
+        available: true,
+        special: false
+      },
+      {
+        id: '2411925-f3',
+        name: 'Tuna Taiyaki',
+        description: 'Fish-shaped pancake cake keki',
+        price: 2.5,
+        category: 'Dessert',
+        popular: false,
         available: false,
         special: false
       },
       {
-        id: 'ami-3',
-        name: 'Sirap Limau Selasih',
-        description: 'Iced rose cordial with freshly squeezed lime juice and basil seeds',
-        price: 2.50,
+        id: '2411925-d1',
+        name: 'Chocolate Catpucchino',
+        description: 'Brewed in purrfection',
+        price: 5.0,
         category: 'Drinks',
+        popular: true,
+        available: true,
+        special: false
+      },
+      {
+        id: '2411925-d2',
+        name: 'Pawmegranate Juice',
+        description: 'The only fruit i can make a pun of',
+        price: 3.5,
+        category: 'Drinks',
+        popular: false,
+        available: false,
+        special: false
+      },
+      {
+        id: '2411925-d3',
+        name: 'Matcha Catnip Latte',
+        description: 'Matcha with some catnip (decoration)',
+        price: 6.9,
+        category: 'Drinks',
+        popular: true,
+        available: true,
+        special: false
+      },
+      {
+        id: '2411925-s1',
+        name: 'Whiskers Fries',
+        description: 'Put them on your cheeks!',
+        price: 3.0,
+        category: 'Snacks',
+        popular: true,
+        available: true,
+        special: false
+      },
+      {
+        id: '2411925-s2',
+        name: 'Meownigiri',
+        description: 'Savory onigini with cat ears',
+        price: 1.5,
+        category: 'Snacks',
+        popular: true,
+        available: true,
+        special: false
+      }
+    ]
+  },
+  {
+    id: '2418547-kafe-boost',
+    name: 'Boost Juice',
+    location: 'IIUM Gombak, Student Mall',
+    openHours: '10:00 am - 10:00 pm',
+    isOpen: true,
+    menu: [
+      {
+        id: '2418547-boost-1',
+        name: 'All Berry Bang',
+        description: 'A refreshing blend of mixed berries and apple juice',
+        price: 12.9,
+        category: 'Fruit Smoothies',
+        available: true,
+        special: true
+      },
+      {
+        id: '2418547-boost-2',
+        name: 'Mango Magic',
+        description: 'A tropical blend of mango, banana and yoghurt',
+        price: 12.9,
+        category: 'Fruit Smoothies',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-3',
+        name: 'Strawberry Squeeze',
+        description: 'A sweet strawberry smoothie blended with apple juice',
+        price: 12.9,
+        category: 'Fruit Smoothies',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-4',
+        name: 'Banana Buzz',
+        description: 'A creamy banana smoothie with honey and yoghurt',
+        price: 12.9,
+        category: 'Fruit Smoothies',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-5',
+        name: 'Watermelon Crush',
+        description: 'A refreshing watermelon and apple juice blend',
+        price: 12.9,
+        category: 'Fruit Crushes',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-6',
+        name: 'Mango Tango',
+        description: 'A tropical mango drink with a refreshing fruity taste',
+        price: 12.9,
+        category: 'Fruit Crushes',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-7',
+        name: 'Passion Mango',
+        description: 'A tropical passion fruit and mango blend',
+        price: 12.9,
+        category: 'Fruit Crushes',
+        available: true,
+        special: false
+      },
+      {
+        id: '2418547-boost-8',
+        name: 'King William Chocolate',
+        description: 'A rich chocolate smoothie with a creamy taste',
+        price: 13.9,
+        category: 'Special Blends',
         available: true,
         special: false
       }

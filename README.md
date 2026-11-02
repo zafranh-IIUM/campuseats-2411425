@@ -2,7 +2,10 @@
 
 ## Vendors Credits
 - **Primary Shop (My Shop):** Zafran's Kitchen (`2411425-zafran-kitchen`) — 8 menu items across 4 categories (`Rice`, `Noodles`, `Drinks`, `Snacks`).
-- **Vendors 2–3 from classmates:** Kafe Mahallah Ali (`2415666-kafe-ali` from `2415666`) and Kafe Mahallah Aminah (`2410233-kafe-aminah` from `2410233`).
+- **Vendors from classmates:**
+  - Romantika Pizza (`2419609-Romantika Pizza` from `2419609`)
+  - Furtive Katfe (`2411925-furtive-katfe` from `2411925`)
+  - Boost Juice (`2418547-kafe-boost` from `2418547`)
 
 ## Features Implemented (Weeks 1–4)
 1. **Custom Hooks (`src/hooks/`)**:
