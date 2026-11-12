@@ -56,3 +56,17 @@ I kept the modular separation into `src/hooks/`, `src/context/`, `src/pages/`, a
 
 - One thing the AI got wrong and how I fixed it:
 In the initial version of `useVendors.js` (and `SpecialBanner.jsx`), calling `setLoading(true)` or `setTimeLeft(calculateRemaining())` synchronously at the top of `useEffect` triggered ESLint's `react-hooks/set-state-in-effect` error. We fixed this by moving `setLoading(true)` and `setError(null)` into the `reload()` function in `useVendors.js` and using lazy initial state `useState(() => calculateRemaining())` for the countdown timer so `npm run lint` and `npm run build` pass with zero errors.
+
+## Week 5
+- Tool(s):
+Gemini (Antigravity VS Code Extension)
+
+- What I asked for:
+I provided the Week 5 lecture slides, Lab 5 sheet, route selection guide, and my Firebase configuration. I asked the AI to explain the entire roadmap first, identify my assigned personal feature from my matric number ending in 5, and then build the full Firebase setup: environment variables in `.env.local`, `firebase.js`, `AuthProvider.jsx` with `useAuth`, friendly error messages in `authErrors.js`, `LoginPage`, `RegisterPage`, `ProtectedRoute.jsx`, and updating the header and `HomePage` daily specials.
+
+- What I kept, changed or rejected, and why:
+I kept the separation between `AuthContext` and `AuthProvider.jsx`, the persistent auth listener using `onAuthStateChanged` with clean unsubscription, and the route guarding pattern in `ProtectedRoute.jsx` with an explicit loading check before redirecting. For the Digit 5 personal feature, I ensured that signed-in users see their personalized greeting with the active countdown, while guests see a prompt linking them to log in.
+
+- One thing the AI got wrong and how I fixed it:
+The AI initially omitted the `.env.local` entry in `.gitignore`, assuming Vite's wildcard `*.local` would be sufficient for all platforms. We explicitly added `.env.local` to `.gitignore` to guarantee secret keys are never committed to git under any circumstances.
+

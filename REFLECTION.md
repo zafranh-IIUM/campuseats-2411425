@@ -80,3 +80,26 @@ A plain `<a href="/cart">` forces the browser to request a new HTML document fro
 **5. Why do `/vendor/abc` and `/xyz` show two different screens?**
 - Visiting `/vendor/abc` matches the route `path="vendor/:id"` with `useParams()` returning `{ id: 'abc' }`. `VendorPage` renders, searches `vendors.find((v) => v.id === id)`, gets `undefined`, and displays the `"Vendor not found"` message.
 - Visiting `/xyz` does not match `/`, `vendor/:id`, `cart`, or `orders`, so React Router falls through to the catch-all route `path="*"` and renders `NotFoundPage` (404).
+
+---
+
+# Week 5 Reflection: Firebase Setup and Authentication
+
+**1. Why do we store Firebase configuration in `.env.local`, and why is it fine that this config is visible in the browser?**
+We store Firebase configuration values in `.env.local` to prevent hardcoding project credentials into our source code and to keep them out of Git repositories. In Vite, only environment variables prefixed with `VITE_` are bundled and exposed to client-side code (`import.meta.env`). Having this configuration visible in the browser client bundle is completely normal and secure because Firebase config does not grant administrator privileges; it only tells the Firebase JavaScript SDK which Google Cloud project to communicate with. Real access control and data security are enforced server-side by Firebase Authentication and Firestore Security Rules.
+
+**2. What does "Don't ask who is signed in: listen" mean, and why is the `loading` state crucial in `AuthProvider`?**
+Firebase authentication runs asynchronously. When an application first loads, Firebase needs a moment to read existing session tokens from indexedDB and verify them with Google's servers. If we simply checked `auth.currentUser` synchronously on startup, it would always return `null`. Instead, we listen with `onAuthStateChanged(auth, callback)`, which fires whenever a user signs in, signs out, or initializes. While waiting for the first verification response, `loading` remains `true`. This `loading` guard prevents `ProtectedRoute` from mistakenly assuming the user is logged out on a page refresh, which would otherwise cause an annoying flash of the login page.
+
+**3. How does `ProtectedRoute` work as a layout route, and why do we pass `location.pathname` in `state`?**
+In React Router, `ProtectedRoute` acts as a guard layout route wrapping protected sub-routes (`/cart` and `/orders`). If `loading` is true, it renders a loading indicator; if `user` is authenticated, it renders `<Outlet />` to reveal the protected page. If unauthenticated, it returns `<Navigate to="/login" replace state={{ from: location.pathname }} />`. Passing `location.pathname` in `state` allows `LoginPage` to inspect `location.state?.from` and automatically redirect the student back to the exact page they were trying to visit after logging in, rather than resetting them to the home page.
+
+**4. Why must methods like `login`, `register`, and `logout` in `AuthProvider` return Promises or use `async / await`?**
+Network calls to Firebase Auth (`createUserWithEmailAndPassword`, `signInWithEmailAndPassword`, `signInWithPopup`, `signOut`) are asynchronous operations that return Promises. Returning those Promises from `AuthProvider` allows consumer components (like `LoginPage` and `RegisterPage`) to `await` them inside `try / catch` blocks. This allows pages to toggle loading states (`busy`), disable submit buttons during in-flight requests, and gracefully catch and display error messages.
+
+**5. Why do we map Firebase error codes to friendly sentences in `authErrors.js`?**
+Firebase throws technical error objects containing machine codes (e.g., `auth/invalid-credential`, `auth/weak-password`, `auth/email-already-in-use`). Displaying raw API error strings damages user experience and confuses non-technical users. Centralizing error mapping in `src/authErrors.js` converts technical codes into friendly, actionable English sentences while keeping UI components focused purely on presentation.
+
+**6. How does the Personal Feature (Digit 5: Daily Special with Countdown) adapt to authenticated users?**
+On the `HomePage`, the daily special section uses `useAuth()` to distinguish between logged-in students and guests. When a user is signed in, the section greets them personally (`⭐ Today's special for <displayName>`) and runs the active countdown timer toward 10:00 PM. For guest visitors, the special details are replaced with a clear call-to-action prompt (`Log in to see today's special`) linking directly to `/login`. This encourages sign-in while preserving free browsing for the rest of the vendor directory.
+

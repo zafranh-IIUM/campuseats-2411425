@@ -625,3 +625,43 @@ body {
   border-bottom: 1px solid #f1f5f9;
   font-size: 0.95rem;
 }
+
+/* --- Week 5 Additions: Authentication --- */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 1rem;
+}
+
+.auth-page .card.form {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #065f46;
+  border: 1px solid #065f46;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn-outline:hover {
+  background-color: #ecfdf5;
+}
+
+.user-name {
+  color: #d1fae5;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
