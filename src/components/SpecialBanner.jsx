@@ -1,36 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
-function calculateRemaining() {
-  const now = new Date();
-  const target = new Date();
-  target.setHours(22, 0, 0, 0); // Special offer ends at 10:00 PM tonight
-
-  const diff = target - now;
-  if (diff <= 0) {
-    return 'Ended';
+function calculateRemaining(targetTimestamp) {
+  const now = new Date()
+  let target
+  if (targetTimestamp?.toDate) {
+    target = targetTimestamp.toDate()
+  } else if (targetTimestamp instanceof Date) {
+    target = targetTimestamp
+  } else {
+    target = new Date()
+    target.setHours(22, 0, 0, 0) // fallback: 10:00 PM tonight
   }
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  const diff = target - now
+  if (diff <= 0) {
+    return 'Ended'
+  }
 
-  const pad = (n) => String(n).padStart(2, '0');
-  return `${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s left`;
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s left`
 }
 
 export default function SpecialBanner({ specialItem, onAdd }) {
-  const [timeLeft, setTimeLeft] = useState(() => calculateRemaining());
+  const [timeLeft, setTimeLeft] = useState(() =>
+    calculateRemaining(specialItem?.specialEndsAt),
+  )
 
-  // Personal Feature (Digit 5): Live countdown with useEffect + setInterval + cleanup
+  // Personal Feature (Digit 5): Live countdown from Firestore specialEndsAt Timestamp
   useEffect(() => {
     const timerId = setInterval(() => {
-      setTimeLeft(calculateRemaining());
-    }, 1000);
+      setTimeLeft(calculateRemaining(specialItem?.specialEndsAt))
+    }, 1000)
 
-    return () => clearInterval(timerId); // Cleanup when unmounted
-  }, []);
+    return () => clearInterval(timerId)
+  }, [specialItem?.specialEndsAt])
 
-  if (!specialItem) return null;
+  if (!specialItem) return null
 
   return (
     <div className="special-banner">
@@ -57,5 +66,5 @@ export default function SpecialBanner({ specialItem, onAdd }) {
         </button>
       </div>
     </div>
-  );
+  )
 }
