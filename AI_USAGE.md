@@ -70,3 +70,17 @@ I kept the separation between `AuthContext` and `AuthProvider.jsx`, the persiste
 - One thing the AI got wrong and how I fixed it:
 The AI initially omitted the `.env.local` entry in `.gitignore`, assuming Vite's wildcard `*.local` would be sufficient for all platforms. We explicitly added `.env.local` to `.gitignore` to guarantee secret keys are never committed to git under any circumstances.
 
+## Week 6
+- Tool(s):
+Gemini (Antigravity VS Code Extension)
+
+- What I asked for:
+I provided the Week 6 lecture slides, Lab 6 sheet, NoSQL comparison sheets, and walkthrough materials. I asked the AI to explain the complete Firestore architecture, model our data into collections and subcollections (`vendors`, `menu`, `orders`), establish the services layer (`vendors.js` and `orders.js`), update custom hooks with `onSnapshot` real-time listeners, wire batch order placement with multi-vendor cart splitting, implement `OrderStatus` and `OrderActions` for order modification and cancellation while in 'Received' status, and adapt Personal Feature Digit 5 to count down from a live Firestore `Timestamp`.
+
+- What I kept, changed or rejected, and why:
+I kept the 4-layer architecture strictly isolating direct Firestore imports inside `src/services/` so that UI components only interact with hooks. I kept the atomic multi-vendor grouping in `placeOrders` using `writeBatch(db)`. In `subscribeToMyOrders`, I kept the JavaScript sorting pattern on `createdAt` to avoid needing composite indexes in test mode. For the personal feature, I stored `specialEndsAt` as a Firestore `Timestamp` directly on the menu item so editing the timestamp in the Firebase console updates the active countdown in real time.
+
+- One thing the AI got wrong and how I fixed it:
+When querying orders in `subscribeToMyOrders`, trying to combine `where('studentUid', '==', uid)` with `.orderBy('createdAt', 'desc')` triggers a Firestore error requiring a composite index. We resolved this by querying with `where()` and sorting the snapshot results by timestamp in memory in JavaScript, preventing index creation delays during lab testing.
+
+

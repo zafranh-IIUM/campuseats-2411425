@@ -1,20 +1,17 @@
-import { Link, useParams } from 'react-router';
-import { useVendors } from '../hooks/useVendors.js';
-import { useCart } from '../hooks/useCart.js';
-import MenuList from '../components/MenuList.jsx';
-import SpecialBanner from '../components/SpecialBanner.jsx';
-import { Loading, ErrorMessage } from '../components/Status.jsx';
+import { Link, useParams } from 'react-router'
+import { useVendor } from '../hooks/useVendor.js'
+import { useCart } from '../hooks/useCart.js'
+import MenuList from '../components/MenuList.jsx'
+import SpecialBanner from '../components/SpecialBanner.jsx'
+import { Loading, ErrorMessage } from '../components/Status.jsx'
 
 export default function VendorPage() {
-  const { id } = useParams();
-  const { vendors, loading, error, reload } = useVendors();
-  const { addToCart } = useCart();
+  const { id } = useParams()
+  const { vendor, menu, loading, error } = useVendor(id)
+  const { addToCart } = useCart()
 
-  if (loading) return <Loading />;
-  if (error) return <ErrorMessage message={error} onRetry={reload} />;
-
-  const vendor = vendors.find((v) => v.id === id);
-
+  if (loading) return <Loading />
+  if (error) return <ErrorMessage message={error} onRetry={() => window.location.reload()} />
   if (!vendor) {
     return (
       <div className="card empty-cart-box">
@@ -26,10 +23,12 @@ export default function VendorPage() {
           ← All vendors
         </Link>
       </div>
-    );
+    )
   }
 
-  const specialItem = vendor.menu?.find((item) => item.special ?? item.popular);
+  // Each cart line must know its vendor, so orders can be split per vendor.
+  const items = menu.map((item) => ({ ...item, vendorName: vendor.name }))
+  const specialItem = items.find((item) => item.special ?? item.popular)
 
   return (
     <section className="section-block">
@@ -43,8 +42,8 @@ export default function VendorPage() {
         {vendor.location || vendor.Location} · Open: {vendor.openHours}
       </p>
 
-      <SpecialBanner specialItem={specialItem} onAdd={addToCart} />
-      <MenuList items={vendor.menu} />
+      {specialItem && <SpecialBanner specialItem={specialItem} onAdd={addToCart} />}
+      <MenuList items={items} />
     </section>
-  );
+  )
 }

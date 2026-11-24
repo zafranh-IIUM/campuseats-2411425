@@ -1,8 +1,14 @@
-import { Link } from 'react-router';
-import { useCart } from '../hooks/useCart.js';
+import { Link } from 'react-router'
+import { useMyOrders } from '../hooks/useMyOrders.js'
+import OrderStatus from '../components/OrderStatus.jsx'
+import OrderActions from '../components/OrderActions.jsx'
+import { Loading, ErrorMessage } from '../components/Status.jsx'
 
 export default function OrdersPage() {
-  const { orders } = useCart();
+  const { orders, loading, error } = useMyOrders()
+
+  if (loading) return <Loading />
+  if (error) return <ErrorMessage message={error} onRetry={() => window.location.reload()} />
 
   if (orders.length === 0) {
     return (
@@ -15,38 +21,57 @@ export default function OrdersPage() {
           Browse Vendors
         </Link>
       </div>
-    );
+    )
   }
 
   return (
     <section className="section-block">
       <h2 className="section-title">My Orders</h2>
-      <div className="orders-list">
+      <p className="muted" style={{ marginBottom: '1.25rem' }}>
+        Status updates appear here live.
+      </p>
+
+      <ul className="orders-list" style={{ listStyle: 'none', padding: 0 }}>
         {orders.map((order) => (
-          <article key={order.id} className="card order-card">
+          <li key={order.id} className="card order-card" style={{ marginBottom: '1.25rem' }}>
             <div className="order-card-header">
               <div>
-                <h3 className="order-customer">{order.name}</h3>
+                <h3 className="order-customer" style={{ fontSize: '1.15rem', fontWeight: 600 }}>
+                  {order.vendorName} · pickup {order.pickupTime}
+                </h3>
                 <p className="muted">
-                  Mahallah {order.mahallah} · Pickup at {order.pickupTime}
+                  Customer: {order.studentName} · Mahallah {order.mahallah}
                 </p>
               </div>
-              {order.placedAt && <span className="muted">{order.placedAt}</span>}
+              <span className="muted" style={{ fontSize: '0.85rem' }}>
+                Placed{' '}
+                {order.createdAt?.toDate
+                  ? order.createdAt.toDate().toLocaleString('en-MY')
+                  : 'just now'}
+              </span>
             </div>
-            <ul className="cart-list">
-              {order.items?.map((line) => (
-                <li key={line.item.id} className="order-item-row">
+
+            <ul className="cart-list" style={{ margin: '0.75rem 0' }}>
+              {order.items?.map((item) => (
+                <li key={item.itemId || item.name} className="order-item-row">
                   <span>
-                    {line.qty} × {line.item.name}
+                    {item.qty} × {item.name}
                   </span>
-                  <span>RM {(line.item.price * line.qty).toFixed(2)}</span>
+                  <span>RM {(item.price * item.qty).toFixed(2)}</span>
                 </li>
               ))}
             </ul>
-            <p className="cart-total">Total: RM {order.total?.toFixed(2)}</p>
-          </article>
+
+            <p className="order-total-highlight" style={{ margin: '0.5rem 0' }}>
+              Total: RM {order.total.toFixed(2)}
+            </p>
+
+            <OrderStatus status={order.status} />
+
+            {order.status === 'Received' && <OrderActions order={order} />}
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
-  );
+  )
 }

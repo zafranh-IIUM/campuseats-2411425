@@ -103,3 +103,44 @@ Firebase throws technical error objects containing machine codes (e.g., `auth/in
 **6. How does the Personal Feature (Digit 5: Daily Special with Countdown) adapt to authenticated users?**
 On the `HomePage`, the daily special section uses `useAuth()` to distinguish between logged-in students and guests. When a user is signed in, the section greets them personally (`⭐ Today's special for <displayName>`) and runs the active countdown timer toward 10:00 PM. For guest visitors, the special details are replaced with a clear call-to-action prompt (`Log in to see today's special`) linking directly to `/login`. This encourages sign-in while preserving free browsing for the rest of the vendor directory.
 
+---
+
+# Week 6 Reflection: Cloud Firestore (CRUD and Real-Time Data)
+
+**1. Explain, step by step, what happens from the moment you click Place order until the new order appears on your Orders page. Name the functions in your own code that run, and say why you never call setOrders yourself.**
+When the user clicks "Place order" in `CheckoutForm.jsx`, `handleSubmit` intercepts the native submit event, validates the inputs, and invokes `onPlaceOrder(values)`. This calls `handlePlaceOrder(details)` in `CartPage.jsx`, which in turn executes `placeOrders(user, cart, details)` in `src/services/orders.js`. Inside `placeOrders`, the items in the cart are grouped by `vendorId` using a `Map()`, and a `writeBatch(db)` is prepared to generate one distinct order document per vendor with an auto-generated ID, embedding denormalized item lines, total price, customer info, `status: 'Received'`, and `serverTimestamp()`. Once `batch.commit()` succeeds, `CartPage` calls `clearCart()` and navigates the user to `/orders`. On `OrdersPage.jsx`, the custom hook `useMyOrders()` has an active `useEffect` calling `subscribeToMyOrders(user.uid)` from `src/services/orders.js`, which sets up a real-time `onSnapshot` listener on the Firestore query `where('studentUid', '==', uid)`. The moment the new document arrives on Firestore's servers, `onSnapshot` automatically triggers its callback with the updated snapshot, sorts the documents in JavaScript, and calls `setOrders(data)` internally within `useMyOrders`. We never call `setOrders` ourselves in `handlePlaceOrder` because Firestore's real-time push model makes local optimistic updates redundant; the database itself pushes the single source of truth straight into our listener.
+
+**2. Why is orders a top-level collection, and why does each order copy vendorName and each item's name and price instead of storing only IDs?**
+The `orders` collection is modeled as a top-level collection rather than a subcollection under `vendors` or `users` because orders need to be accessed from multiple independent viewpoints. Students need to query all orders where `studentUid == uid` across various vendors, while vendor managers in later weeks need to query orders where `vendorId == id`. Storing orders at the root makes both query paths fast, scalable, and independent. Furthermore, NoSQL databases like Firestore do not support relational SQL `JOIN` operations at query time. By denormalizing (copying) the `vendorName`, item `name`, and snapshot `price` into each order document at checkout, an order can be fetched and rendered in a single, lightweight read without issuing secondary round-trips for every item. Most importantly, this snapshot preserves historical accuracy: if a vendor changes their shop name or raises the price of an item tomorrow, past customer receipts must accurately reflect the exact price paid at the time of purchase.
+
+**3. Your personal feature: which Firestore path and fields hold its data, and which line of your code reads it? Paste that line.**
+For Personal Feature (Digit 5 — Daily special with countdown), the data lives inside the menu subcollection of each vendor document in Firestore at the path:
+`vendors/{vendorId}/menu/{itemId}`
+The fields holding this data are:
+- `special: true` (boolean flag marking the menu item as a featured daily deal)
+- `specialEndsAt: <Timestamp>` (Firestore Timestamp representing the exact expiry deadline of the special offer)
+
+The line of code that reads this data from Firestore is located in `src/services/vendors.js` inside `subscribeToMenu()`:
+```javascript
+export function subscribeToMenu(vendorId, onData, onError) {
+  return onSnapshot(
+    collection(db, 'vendors', vendorId, 'menu'),
+    (snapshot) =>
+      onData(
+        snapshot.docs.map((d) => ({
+          id: d.id,
+          vendorId,
+          ...d.data(),
+        })),
+      ),
+    onError,
+  )
+}
+```
+This is consumed by `useVendor(vendorId)` in `src/hooks/useVendor.js`, which passes the `specialItem` down to `SpecialBanner.jsx`. In `SpecialBanner.jsx`, line 28 calculates remaining duration from the timestamp:
+```javascript
+setTimeLeft(calculateRemaining(specialItem?.specialEndsAt))
+```
+When `specialEndsAt` is edited live in the Firebase console, `onSnapshot` fires, `useVendor` updates the menu state, and `SpecialBanner` immediately recalculates and updates the countdown on screen without a browser refresh.
+
+

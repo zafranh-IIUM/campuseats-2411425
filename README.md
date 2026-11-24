@@ -37,3 +37,22 @@ Firebase project ID: campuseats-2411425
    - Signed-in users see "Today's special for <name>" alongside the live countdown timer.
    - Guests see a prompt linking them to log in to access today's special.
 
+## Features Implemented (Week 6: Cloud Firestore - CRUD & Real-Time Data)
+1. **Firestore Connection & Data Modeling**:
+   - Connected to Cloud Firestore (`db = getFirestore(app)`).
+   - Modeled data into `vendors/{vendorId}`, `vendors/{vendorId}/menu/{itemId}` (subcollection), and `orders/{orderId}` (auto-ID with denormalized vendor and item details).
+2. **Services Layer (`src/services/vendors.js`, `src/services/orders.js`)**:
+   - Abstracted all direct Firestore imports into the services layer to keep UI components decoupled.
+   - Implemented atomic batch seeding (`seedDemoData`) from `/seed` route.
+3. **Real-Time Data Flow (`useVendors.js`, `useVendor.js`, `useMyOrders.js`)**:
+   - Replaced one-off fetches with real-time `onSnapshot` listeners with unified cleanup functions in `useEffect`.
+   - Menu price changes in Firestore console update the UI instantly without page reload.
+4. **Order Placement & Management (Batch Write, Update, Delete)**:
+   - Multi-vendor carts are split into separate vendor order documents in a single atomic batch write (`writeBatch`).
+   - Added live visual order status tracker (`OrderStatus.jsx`: `Received` → `Preparing` → `Ready` → `Collected`).
+   - Enabled pickup time modification (`updateDoc`) and order cancellation (`deleteDoc`) via `OrderActions.jsx` strictly while status is `Received`.
+5. **Personal Feature Step (Digit 5: Daily Special with Countdown)**:
+   - Stored `special: true` and `specialEndsAt` (Firestore `Timestamp`) in Firestore menu items.
+   - `SpecialBanner.jsx` counts down from `specialItem.specialEndsAt.toDate()`. Editing the timestamp in the Firestore console shifts the countdown in real time.
+
+
